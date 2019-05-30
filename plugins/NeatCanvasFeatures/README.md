@@ -1,56 +1,30 @@
-NeatCanvasFeatures is a JBrowse plugin.
+# NeatCanvasFeatures
 
 It applies intron hats and a gradient 'tubular' look to features and subfeatures of CanvasFeatures tracks.
 
-What it does:
-- draws intron hats and inverted hats for reverse direction features.
-- it applies a gradient 'tubular' look to features and subfeatures, inheriting the feature colors and properties.
-- modifies UTR to be a outlined box, inheriting the original color.
-- generally functional in stand-alone JBrowse.
+![](img/example.png?raw=true)
 
-Install / Activate:
 
-For JBrowse 1.11.6+, copy the NeatCanvasFeatures directory to the 'plugins' directory.
-Add this to appropriate trackList.json under the plugins section (create one if it doesn't exist):
+### Install / Activate:
 
-   "plugins": [ 
-        'NeatCanvasFeatures'
+Add the plugin declaration to the config file as follows
+
+    "plugins": [
+        "NeatCanvasFeatures"
     ],
 
-For Apollo 2.x, copy the NeatCanvasFeatures directory to the web-apps/jbrowse/plugins directory.
-Add this to web-apps/jbrowse/plugins/WebApollo/json/annot.json:
 
-    "plugins" : [
-        {
-           "location" : "./plugins/WebApollo",
-           "name" : "WebApollo"
-        },
-        {
-               "location" : "./plugins/NeatCanvasFeatures",
-               "name" : "NeatCanvasFeatures"
-        }
-   ],
+See http://gmod.org/wiki/JBrowse_FAQ#How_do_I_install_a_plugin for more details
 
 
-Config Options:
-Gradient Features are on for all HTML feature tracks by default.
+### Configuration
 
-They can be turned off globally in the config file by setting gradientFeatures = 0 in the plugin definition, for example:
+    {
+        "label": "Genes",
+        "type": "NeatCanvasFeatures/View/Track/NeatFeatures",
+        "urlTemplate" : "tracks/ReadingFrame/{refseq}/trackData.json"
+        "storeClass": "JBrowse/Store/SeqFeature/NCList"
+    }
 
-   "plugins": [
-        {
-            "name": "NeatHTMLFeatures",
-            "gradientFeatures": 0
-        }
-   ],
+You can also add "gradient": true to the track definition to get gradients added
 
-When gradientFeatures = 0 (globally off) in the plugins definition, gradient features can be enabled on per track basis with gradientFeatures = 1 in the track configuration, for example:
-    "tracks": [
-        {
-            ...
-            "type" : "FeatureTrack",
-            "label" : "ReadingFrame",
-            "gradientFeatures" : 1,
-            ...
-        }
-    ]

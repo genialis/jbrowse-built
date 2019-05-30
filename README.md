@@ -1,37 +1,71 @@
-[![Build status](https://travis-ci.org/GMOD/jbrowse.svg?branch=master)](https://travis-ci.org/GMOD/jbrowse)
+[![Build status](https://travis-ci.org/GMOD/jbrowse.svg?branch=dev)](https://travis-ci.org/GMOD/jbrowse)
 
 # Installing JBrowse
 
-Users of JBrowse should get it from the main JBrowse site at http://jbrowse.org/install.
+To install jbrowse, visit http://jbrowse.org/blog and download the latest JBrowse zip file. See instructions at http://jbrowse.org/docs/installation.html for a tutorial on setting up a sample instance.
 
-Unless you intend to work on the JBrowse code itself, or develop a JBrowse plugin, stop reading now and go to http://jbrowse.org/install.
 
-# About running from a `git` clone
+# Install JBrowse from GitHub (for developers)
 
-Only developers should run JBrowse from a git repository.
-For one reason, the development version has a much, much slower initial load
-time than the built release zipfiles.  Also, since the master branch code is ''in development'' for the next JBrowse release, it often (usually?) contains bad bugs, much more so than the official releases put up on JBrowse.org.
+To install from GitHub, you can simply clone the repo and run the setup.sh script
 
-# Setting up a development environment
-
-Make sure you have a web server installed on your development machine.  Any web server will do.
-
-    cd /my/dev/webserver/root;
-    git clone https://github.com/GMOD/jbrowse jbrowse 
+    git clone https://github.com/GMOD/jbrowse
     cd jbrowse
-    bower --allow-root -f install
     ./setup.sh
-    # and now point your browser to
-    #   http://localhost/jbrowse/index.html?data=sample_data/json/volvox
-    # and you should see the volvox example data
 
 
-Then you can simply edit files and your changes will be available in the browser (i.e. no build step is required)
+Then run `npm run start` http://localhost:8082/index.html?data=sample_data/json/volvox
+ to see the code running from a small express.js server.
 
-You can also optionally run build steps to create the minimized codebase. Extra dependencies Text::Markdown and DateTime are required to run the build step.
+You can alternatively just move this entire folder into a nginx or apache root directory e.g. /var/www/html and then navigate to http://localhost/jbrowse
 
-    make -f build/Makefile release-notest
-    make -f build/Makefile release # alternate build with full test suite
+*Note: you should avoid using sudo tasks like ./setup.sh and instead use chown/chmod on folders to your own user as necessary.*
+
+*Also note: After editing a file, you must re-run the webpack build with `npm run build` or you can keep webpack running in "watch" mode by running  `npm run watch`.*
+
+*Also also note: by default `git clone` will clone the master branch which contains the latest stable release. The latest development branch is called dev. Run `git checkout dev` after clone to retrieve this*
+
+# Installing as an npm module
+
+To install jbrowse from NPM directly, you can run.
+
+    npm install GMOD/jbrowse
+
+To setup a simple instance, you can use
+
+    node_modules/.bin/jb_setup.js
+    node_modules/.bin/jb_run.js
+
+Then visit http://localhost:3000/?data=sample_data/json/volvox
+
+# Contributing
+
+Looking for places to contribute to the codebase?
+[Check out the "help wanted" label](https://github.com/GMOD/jbrowse/labels/help%20wanted).
+
+# Running the developer test suites
+
+The Travis-CI suite runs Perl, JavaScript, and Selenium automated tests. To run locally, you can use
+
+    prove -Isrc/perl5 -lr tests
+    node tests/js_tests/run-puppeteer.js http://localhost/jbrowse/tests/js_tests/index.html
+    pip install selenium nose
+    MOZ_HEADLESS=1 SELENIUM_BROWSER=firefox JBROWSE_URL='http://localhost/jbrowse/index.html' nosetests
+
+Supported browsers for SELENIUM_BROWSER are 'firefox', 'chrome', 'phantom', and 'travis_saucelabs'.  The Sauce Labs + Travis
+one will only work in a properly configured Travis CI build environment.
+
+# Manual testing
+
+<img style="display: block; margin: 1em auto" src="img/browserstack-logo-600x315.png" width="200" alt="Browserstack"/>
+
+JBrowse has a free open source account on [Browserstack](http://browserstack.com/) for manual testing.  Contact @rbuels for access.
+
+# Generating Packaged Builds
+
+You can also optionally run build steps to create the minimized codebase. Extra perl dependencies Text::Markdown and DateTime are required to run the build step.
+
+    make -f build/Makefile
 
 To build the Electron app (JBrowse desktop app), run the following
 
@@ -40,55 +74,21 @@ To build the Electron app (JBrowse desktop app), run the following
 
 To run the Electron app in debug mode run the following
 
-    npm install
-    npm start
-
-# Running the developer test suites
-
-## Server-side Perl
-
-Tests for the server-side Perl code.  You must have the JBrowse Perl
-module prerequisites installed for them to work.  Run with:
-
-    prove -Isrc/perl5 -lr tests
-
-## Client-side Unit Tests
-
-Point your browser at `http://my.dev.machine/jbrowse/tests/js_tests/index.html`
-
-You can also run them from phantomJS using
-
-    phantomjs tests/js_tests/run-jasmine.js http://my.dev.machine/jbrowse/tests/js_tests/index.html
-
-## Client-side Integration Tests
-
-Integration tests for the client-side app.  You need to have Python
-eggs for `selenium` and `nose` installed.  Run the tests with:
-
-    JBROWSE_URL='http://localhost/jbrowse/index.html' nosetests
+    npm install -g electron
+    electron browser/main.js
 
 
-# Cutting a JBrowse release
+# Making a JBrowse release
 
-1. Edit the JBrowse `package.json` file and change 'version' to the version you are releasing.  *Don't commit this change to the repository, it should stay as `dev` in git so that it shows up in analytics as a development version.*
+NOTE: Beginning in 1.12.4,
 
-2. Build the release packages: `make -f build/Makefile release`.  The files produced during the build should not be committed to the repository either. There is also `make -f build/Makefile release-notest` for releases that don't need perl tests to be run. NOTE: you may need to use the command `ulimit -n 1000` to avoid "spawn EMFILE" build errors.
+1. Run `build/release.sh $newReleaseVersion $nextReleaseVersion-alpha.0 notes.txt`, where notes.txt is any additional information to add to a blogpost. Then check its work, and then run the `git push` command it suggests to you. This makes a tag in the repository for the release, named, e.g. `1.6.3-release`.  This should cause Travis CI
+to create a release on GitHub under https://github.com/GMOD/jbrowse/releases
 
-3. Make a tag in the repository for the release, named, e.g. `1.6.3-release`.
+1. Add release notes to the new GitHub release that Travis created. Can just paste these from release-notes.md, which is in Markdown format.
 
-4. `scp` the release .zip files (min and full) to jbrowse.org.
+1. Write a twitter post for usejbrowse and JBrowseGossip with the announcement link to the blogpost
 
-5. Add them to the Wordpress Downloads list so that we can track how
-many times they are downloaded.
-
-6. Write a blog post announcing the release.  The `release-notes.html`
-file made during the build might be useful for this.
-
-7. Update the "Install" page on the site to point to the newest release.
-
-8. Update the latest-release code checkout on the site, which the "Latest Release" demo on the jbrowse.org points to, to be an unzipped-and-set-up copy of the latest release.
-
-9. Write an email announcing the release, sending to gmod-ajax,
-jbrowse-dev.  If it is a major release, add gmod-announce and make a GMOD news item.
+1. Write an email announcing the release, sending to gmod-ajax. If it is a major release, add gmod-announce and make a GMOD news item.
 
 As you can tell, this process could really use some more streamlining and automation.

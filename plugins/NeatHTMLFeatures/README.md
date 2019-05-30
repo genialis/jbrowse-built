@@ -1,66 +1,33 @@
-#NeatHTMLFeatures - a JBrowse plugin.
+# NeatHTMLFeatures
 
-It applies intron hats and a gradient 'tubular' look to features and subfeatures of HTMLFeatures tracks.
-This is refactored from HTMLFeaturesEx.js implementation and the insertion/modification to DOM elements are done out-of-band,
-due to difference between HTMLFeatures and DragableHTMLFeatures feature DOMs.
+This plugin is designed to draw intron hats to features and subfeatures of HTMLFeatures tracks.
 
-What it does:
-- draws intron hats and inverted hats for reverse direction features.
-- it applies a gradient 'tubular' look to features and subfeatures, inheriting the feature colors and properties.
-- modifies UTR to be a outlined box, inheriting the original color.
-- generally functional in stand-alone JBrowse.
-- special considerations have been made for the unique way Web Apollo renders it's nested subfeatures.
+![](img/example.png?raw=true)
 
 
-##Install / Activate:
 
-For JBrowse 1.11.6+, copy the NeatHTMLFeatures directory to the 'plugins' directory.
-Add this to appropriate trackList.json under the plugins section (create one if it doesn't exist):
+### Install / Activate:
 
-    "plugins": [ 
-        'NeatHTMLFeatures'
-    ],
-
-For Apollo 2.x, copy the NeatHTMLFeatures directory to the web-apps/jbrowse/plugins directory.
-Add this to web-apps/jbrowse/plugins/WebApollo/json/annot.json:
-
-    "plugins" : [
-      {
-         "location" : "./plugins/WebApollo",
-         "name" : "WebApollo"
-      },
-	  {
-		 "location" : "./plugins/NeatHTMLFeatures",
-		 "name" : "NeatHTMLFeatures"
-	  }
-    ],
-
-
-#Config Options:
-Introns remain ON for all feature tracks.
-Neat Features are ON by default, but can be disabled.
-Linear Gradients are ON by default (and visible as part of neat features), but can be disabled on all tracks.
-
-Neat features can be turned off globally in the config file by setting neatFeatures = 0 in the plugin definition, for example:
+Add the plugin declaration to the config file as follows
 
     "plugins": [
-        {
-            "name": "NeatHTMLFeatures",
-            "neatFeatures": 0
-        }
+        "NeatHTMLFeatures"
     ],
 
-When neatFeatures = 0 (globally off) in the plugins definition, gradient features can be enabled on per track basis with neatFeatures = 1 in the track configuration, for example:
 
-    "tracks": [
-        {
-            ...
-            "type" : "FeatureTrack",
-            "label" : "ReadingFrame",
-            "neatFeatures" : 1,
-            "linearGradient": 0,
-            ...
-        }
-    ]
+See http://gmod.org/wiki/JBrowse_FAQ#How_do_I_install_a_plugin for more details
 
-(note: the track-level neatFeatures option only applies when the plugin-level neatFeatures=0)
+
+### Configuration
+
+    {
+        "label": "Genes",
+        "type": "NeatHTMLFeatures/View/Track/NeatFeatures",
+        "urlTemplate" : "tracks/ReadingFrame/{refseq}/trackData.json"
+        "storeClass": "JBrowse/Store/SeqFeature/NCList"
+    }
+
+
+### Note
+
+Gradients are not enabled currently just due to a refactoring

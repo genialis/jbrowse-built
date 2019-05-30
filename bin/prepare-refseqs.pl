@@ -22,11 +22,15 @@ prepare-refseqs.pl - format reference sequences for use by JBrowse
    # OR:
        prepare-refseqs.pl --indexed_fasta <file>  [options]
    # OR:
+       prepare-refseqs.pl --bgzip_fasta <file>  [options]
+   # OR:
        prepare-refseqs.pl --twobit <file>  [options]
    # OR:
-       prepare-refseqs.pl --conf <JBrowse config file>  [options]
+       prepare-refseqs.pl --conf <biodb config file>  [options]
    # OR:
        prepare-refseqs.pl --sizes <sizes file>  [options]
+   # OR:
+       prepare-refseqs.pl --gff-sizes <gff file>  [options]
 
 =head1 DESCRIPTION
 
@@ -39,8 +43,8 @@ You can use a GFF file to describe the reference sequences; or you can
 use a JBrowse config file (pointing to a BioPerl database) or a FASTA
 file, together with a list of refseq names or a list of refseq IDs.
 If you use a GFF file, it should contain ##sequence-region lines as
-described in the GFF specs, and/or it should be GFF version 3 with an
-embedded FASTA section.
+described in the GFF specs (for --gff-sizes), and/or it should be GFF
+version 3 with an embedded FASTA section (for --gff).
 
 If you use a JBrowse config file or FASTA file, you can either provide
 a (comma-separated) list of refseq names, or (if the names aren't
@@ -52,20 +56,10 @@ database will be used.
 
 =over 4
 
-=item --gff <file>
+=item --noSort
 
-Get reference sequences from a GFF3 file with embedded sequence
-information.
-
-=item --fasta <file>
-
-A FASTA file, optionally gzipped from which to load reference
-sequences.
-
-=item --indexed_fasta <file>
-
-A FASTA file (which should already have an accompaning '.fai' file)
-from which to load reference sequences.
+If using GFF or FASTA input, preserve the order of the reference
+sequences (sorts alphabetically by default).
 
 =item --conf <file>
 
@@ -115,6 +109,12 @@ The displayed name of the sequence track, defaults to 'Reference sequence'.
 
 The Name of the alphabet used for these reference sequences, usually
 either 'dna', 'rna', or 'protein'.
+
+=item --trackConfig '{ JSON-format extra configuration for this track }'
+
+Additional top-level configuration for the client, in JSON syntax.  Example:
+
+  --trackConfig '{ "glyph": "ProcessedTranscript" }'
 
 =back
 

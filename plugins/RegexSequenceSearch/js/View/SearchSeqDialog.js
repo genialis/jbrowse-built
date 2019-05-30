@@ -1,4 +1,4 @@
-define("RegexSequenceSearch/View/SearchSeqDialog", [
+define([
         'dojo/_base/declare',
         'dojo/dom-construct',
         'dojo/aspect',

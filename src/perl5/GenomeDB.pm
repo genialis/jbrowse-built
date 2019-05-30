@@ -38,7 +38,7 @@ use Hash::Merge ();
 
 use JsonFileStorage;
 
-use Bio::JBrowse::ConfigurationFile;
+use Bio::JBrowse::ConfigurationManager;
 
 my $defaultTracklist = {
                         formatVersion => 1,
@@ -177,10 +177,9 @@ override the existing settings for that track.
 sub getTrack {
     my ($self, $trackLabel, $config, $key, $jsclass ) = @_;
 
-    my $trackList = $self->{rootStore}->get($trackListPath,
-                                            $defaultTracklist);
+    my $trackList = $self->trackList();
     my ( $trackDesc ) = my @selected =
-        grep { $_->{label} eq $trackLabel } @{$trackList->{tracks}};
+        grep { $_->{label} eq $trackLabel } @$trackList;
 
     return unless @selected;
 
@@ -258,7 +257,37 @@ Returns a arrayref of hashrefs defining the reference sequences, as:
 =cut
 
 sub refSeqs {
-    shift->{rootStore}->get( 'seq/refSeqs.json', [] );
+    my $self = shift;
+    my $conf = Bio::JBrowse::ConfigurationManager->new( conf => {
+        baseUrl => "$self->{dataDir}",
+        include => [ $trackListPath, 'tracks.conf' ],
+    })->get_final_config;
+
+    if(my $seqs = $conf->{refSeqs}) {
+        if($seqs =~ /.fai$/) {
+            my @refs;
+            my $file = File::Spec->join($self->{dataDir}, $seqs);
+            open FAI, "<$file" or die "Unable to read from $file $!\n";
+            while (<FAI>) {
+                if (/([^\t]+)\t(\d+)\t(\d+)\t(\d+)\t(\d+)/) {
+                    push(@refs, {
+                        name => $1,
+                        start => 0,
+                        end => $2+0,
+                        offset => $3,
+                        line_length => $4,
+                        line_byte_length => $5
+                    });
+                } else {
+                    die "Improperly-formatted line in fai file ($file):\n$_\n"
+                }
+            }
+            close FAI;
+            return \@refs;
+        }
+    } else {
+        return $self->{rootStore}->get( 'seq/refSeqs.json', [] );
+    }
 }
 
 
@@ -284,15 +313,13 @@ Return an arrayref of track definition hashrefs similar to:
 
 sub trackList {
     my ( $self ) = @_;
-    my $json_tracks = $self->{rootStore}->get( 'trackList.json', { tracks => [] } )->{tracks};
-    my $conf_tracks = $self->_read_text_conf( 'tracks.conf' )->{tracks} || [];
-    return [ @$json_tracks, @$conf_tracks ];
-}
-
-sub _read_text_conf {
-    my ( $self, $path ) = @_;
-    $path = File::Spec->catfile( $self->{dataDir}, $path );
-    return Bio::JBrowse::ConfigurationFile->new( path => $path )->to_hashref;
+    my $conf = Bio::JBrowse::ConfigurationManager->new( conf => {
+        baseUrl => "$self->{dataDir}",
+        include => [ $trackListPath, 'tracks.conf' ],
+    })->get_final_config;
+    my $tracks = $conf->{tracks} || [];
+    @$tracks = sort { $a->{label} cmp $b->{label} } @$tracks;
+    return $tracks;
 }
 
 =head2 CORS_htaccess

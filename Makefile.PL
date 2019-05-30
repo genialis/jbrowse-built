@@ -37,7 +37,6 @@ my %WriteMakefileArgs = (
     "bin/generate-names.pl",
     "bin/maker2jbrowse",
     "bin/prepare-refseqs.pl",
-    "bin/wig-to-json.pl",
     "bin/biodb-to-json.pl",
     "bin/draw-basepair-track.pl",
     "bin/flatfile-to-json.pl",
@@ -46,7 +45,6 @@ my %WriteMakefileArgs = (
     "bin/add-bam-track.pl",
     "bin/add-json.pl",
     "bin/add-track-json.pl",
-    "bin/bam-to-json.pl",
     "bin/json2conf.pl",
   ],
   "LICENSE" => "perl",
@@ -54,6 +52,7 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "Bio::Annotation::SimpleValue" => 0,
     "Bio::FeatureIO" => 0,
+    "Bio::GFF3::LowLevel" => "1.8",
     "Bio::GFF3::LowLevel::Parser" => "1.8",
     "Bio::Index::Fasta" => 0,
     "Bio::OntologyIO" => 0,
