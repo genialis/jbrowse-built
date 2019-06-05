@@ -7,6 +7,7 @@ const blacklist = {};
 `
 JBrowse/main
 JBrowse/standalone
+JBrowse/genialis
 `
 .trim().split(/\s+/).forEach(mid => blacklist[mid] = 1)
 

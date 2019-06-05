@@ -16,8 +16,7 @@ const DEBUG = ! [1,'1','true'].includes(process.env.JBROWSE_BUILD_MIN)
 
 var webpackConf = {
     entry: {
-        main: "src/JBrowse/main",
-        browser: "src/JBrowse/standalone"
+        "genialis-browser": "src/JBrowse/genialis",
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
@@ -70,7 +69,7 @@ var webpackConf = {
                 }
             },
             {
-                test: /src\/JBrowse\/main.js|src\/JBrowse\/standalone.js|tests\/js_tests\/main.js/,
+                test: /src\/JBrowse\/main.js|src\/JBrowse\/standalone.js|src\/JBrowse\/genialis.js|tests\/js_tests\/main.js/,
                 use: [{ loader: path.resolve('build/glob-loader.js') }]
             },
             {
