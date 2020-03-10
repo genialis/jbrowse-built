@@ -1328,7 +1328,7 @@ binary@^0.3.0:
 
 bl@^1.0.0:
   version "1.2.2"
-  resolved "http://registry.npmjs.org/bl/-/bl-1.2.2.tgz#a160911717103c07410cef63ef51b397c025af9c"
+  resolved "https://registry.npmjs.org/bl/-/bl-1.2.2.tgz#a160911717103c07410cef63ef51b397c025af9c"
   dependencies:
     readable-stream "^2.3.5"
     safe-buffer "^5.1.1"
@@ -1936,7 +1936,7 @@ colors@~1.1.2:
 
 combined-stream@1.0.6:
   version "1.0.6"
-  resolved "http://registry.npmjs.org/combined-stream/-/combined-stream-1.0.6.tgz#723e7df6e801ac5613113a7e445a9b69cb632818"
+  resolved "https://registry.npmjs.org/combined-stream/-/combined-stream-1.0.6.tgz#723e7df6e801ac5613113a7e445a9b69cb632818"
   dependencies:
     delayed-stream "~1.0.0"
 
@@ -2524,12 +2524,12 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
-dijit@1.14.2, dijit@^1.14.2:
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/dijit/-/dijit-1.14.2.tgz#7766c92faef57abffb15dbb0434c35169d1eb0d4"
-  integrity sha512-T/jEhBVpGdU3ruw5K68S8qn8VCjn1Pv/2fC4g0QJjPD0VgxOV9BvXdjo8Fjpv5AQ69PEUdZijHrSTTcPwIo7bg==
+dijit@1.14.6, dijit@^1.14.2:
+  version "1.14.6"
+  resolved "https://registry.yarnpkg.com/dijit/-/dijit-1.14.6.tgz#d86b96e75ed9dfa9146df9faf57aaf512ad63361"
+  integrity sha512-14SbxU5uH22btRP+US9xiYm/kN22UkF5zOI4Um+GH4XZFqggAh6TY2vEqZMN0TAGhRKjrdWY/92aJLFPLMvrzg==
   dependencies:
-    dojo "1.14.2"
+    dojo "1.14.6"
 
 dir-glob@^2.0.0:
   version "2.0.0"
@@ -2573,18 +2573,18 @@ dojo-webpack-plugin@^2.8.5:
     tmp "0.0.30"
     webpack-plugin-compat "1.0.1"
 
-dojo@1.14.2, dojo@^1.14.2, dojo@^1.9.0:
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/dojo/-/dojo-1.14.2.tgz#45ca90b19068230e1486f68b1531fa4ce0e21280"
-  integrity sha512-TI+Ytgfh/VfmHWERp45Jte6NFMdoJTPsvUP/uzJUvAXET8FP2h442LePWWJ/q/xZ4V0V8OtdJhx8It/GB+Zbxg==
+dojo@1.14.6, dojo@^1.14.2, dojo@^1.9.0:
+  version "1.14.6"
+  resolved "https://registry.yarnpkg.com/dojo/-/dojo-1.14.6.tgz#b48da66feabcd9c3f0487cb32c74a8f496359fd9"
+  integrity sha512-xQJZ4v5TyDUssWJ33ReSZI82KJ6hBplOWZcfsbXzT2nwggSrnAnsd2OHNShwK4zs+R6+DY+7qxGtTRdJBYyR5g==
 
 dojox@^1.14.2:
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/dojox/-/dojox-1.14.2.tgz#22e0ed2d06255fc207cd4a7a1affe961af39de55"
-  integrity sha512-IOFzVbTGTXEUWskPPL1tEuVU20ANErgRcgjiSq/rY4K3m37L0h7t9k0NRr+vSO2vJH5u3IswvVH23GUrYEDnwg==
+  version "1.14.6"
+  resolved "https://registry.yarnpkg.com/dojox/-/dojox-1.14.6.tgz#279bf34ea471eb7f46dd89d38f2ab48b82f1037f"
+  integrity sha512-QNs8rvofLaNgfAVGnW/b+3G0DML2311utrUNH/NLkn+HTGEb3Hyu1RpxkVtW6QKUR0ZRus+cGIho4coYcnTy9Q==
   dependencies:
-    dijit "1.14.2"
-    dojo "1.14.2"
+    dijit "1.14.6"
+    dojo "1.14.6"
 
 domain-browser@^1.1.1:
   version "1.2.0"
@@ -3076,7 +3076,7 @@ extend@~3.0.1, extend@~3.0.2:
 
 external-editor@^2.0.4:
   version "2.2.0"
-  resolved "http://registry.npmjs.org/external-editor/-/external-editor-2.2.0.tgz#045511cfd8d133f3846673d1047c154e214ad3d5"
+  resolved "https://registry.npmjs.org/external-editor/-/external-editor-2.2.0.tgz#045511cfd8d133f3846673d1047c154e214ad3d5"
   dependencies:
     chardet "^0.4.0"
     iconv-lite "^0.4.17"
@@ -4891,7 +4891,7 @@ minimist@^1.1.0, minimist@^1.1.3, minimist@^1.2.0:
 
 minimist@~0.0.1:
   version "0.0.10"
-  resolved "http://registry.npmjs.org/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
+  resolved "https://registry.npmjs.org/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
 
 minipass@^2.2.1, minipass@^2.3.3:
   version "2.3.4"
@@ -5226,7 +5226,7 @@ npm-bundled@^1.0.1:
 
 npm-install-package@~2.1.0:
   version "2.1.0"
-  resolved "http://registry.npmjs.org/npm-install-package/-/npm-install-package-2.1.0.tgz#d7efe3cfcd7ab00614b896ea53119dc9ab259125"
+  resolved "https://registry.npmjs.org/npm-install-package/-/npm-install-package-2.1.0.tgz#d7efe3cfcd7ab00614b896ea53119dc9ab259125"
 
 npm-packlist@^1.1.6:
   version "1.1.11"
@@ -7275,7 +7275,7 @@ through2@~0.2.3:
 
 through@2, through@^2.3.6:
   version "2.3.8"
-  resolved "http://registry.npmjs.org/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
+  resolved "https://registry.npmjs.org/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
 
 time-zone@^1.0.0:
   version "1.0.0"
